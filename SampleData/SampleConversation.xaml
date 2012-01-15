@@ -1,0 +1,8 @@
+﻿<SampleData:Conversation xmlns:SampleData="clr-namespace:GoogleVoice" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" OtherParticipant="Erin McPetersen" DisplayNumber="(206)555-1234">
+    <SampleData:Conversation.Messages>
+        <SampleData:Message Incoming="False" Time="4:30 PM" Text="Hi, I'm here to pick up the monitor!"></SampleData:Message>
+        <SampleData:Message Incoming="True" Time="4:30 PM" Text="GO AWAY WE DON'T SERVE YOUR KIND!"></SampleData:Message>
+        <SampleData:Message Incoming="False" Time="4:30 PM" Text="y u mad bro? u mad!"></SampleData:Message>
+        <SampleData:Message Incoming="True" Time="4:30 PM" Text="No monitors for sale here, please head to my old address and stfu man!"></SampleData:Message>
+    </SampleData:Conversation.Messages>
+</SampleData:Conversation>

@@ -1,0 +1,11 @@
+﻿<SampleData:GoogleVoiceClient xmlns:SampleData="clr-namespace:GoogleVoice" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <SampleData:GoogleVoiceClient.Conversations>
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" IsRead="True" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+		<SampleData:Conversation LastMessageText="This is a test of the emergency broadcast system. Do not be alarmed." LastMessageTimeText="4:30 PM" OtherParticipant="Koushik Dutta" />
+	</SampleData:GoogleVoiceClient.Conversations>
+</SampleData:GoogleVoiceClient>

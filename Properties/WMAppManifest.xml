@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.0">
+  <App xmlns="" ProductID="{42c7ea80-7c03-45d2-af9f-9f695b03576a}" Title="GVoice" RuntimeType="Silverlight" Version="1.1.0.0" Genre="apps.normal"  Author="ClockworkMod" Description="A Google Voice client for Windows Phone" Publisher="ClockworkMod">
+    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING"/>
+        <Capability Name="ID_CAP_PUSH_NOTIFICATION"/>
+        <Capability Name="ID_CAP_PHONEDIALER"/>
+		<Capability Name="ID_CAP_IDENTITY_USER"/>
+		<Capability Name="ID_CAP_MEDIALIB"/>
+		<Capability Name="ID_CAP_MICROPHONE"/>
+		<Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
+	</Capabilities>
+    <Tasks>
+      <DefaultTask  Name ="_default" NavigationPage="MainPage2.xaml"/>
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="GoogleVoiceToken" TaskName="_default">
+        <TemplateType5>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <Count>0</Count>
+          <Title>GVoice</Title>
+        </TemplateType5>
+      </PrimaryToken>
+    </Tokens>
+  </App>
+</Deployment>

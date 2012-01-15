@@ -1,0 +1,135 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="GoogleVoice.ConversationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    xmlns:src="clr-namespace:GoogleVoice"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	xmlns:tilt="clr-namespace:ControlTiltEffect"
+	xmlns:msads="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+	d:DataContext="{d:DesignData SampleData/SampleConversation.xaml}"
+    >
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsVisible="True">
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.email.rest.png" Text="send" Click="Send_Click" />
+			<shell:ApplicationBarIconButton x:Uid="foo" IconUri="/icons/appbar.transport.play.rest.png" Text="play" x:Name="mPlayButton" Click="mPlayButton_Click"/>
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.transport.pause.rest.png" Text="pause" x:Name="mPauseButton" Click="mPauseButton_Click"/>
+			<shell:ApplicationBarIconButton IconUri="/icons/appbar.stop.rest.png" Text="stop" x:Name="mStopButton" Click="mStopButton_Click"/>
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem x:Name="mMarkAsUnread" Text="mark as unread" Click="MarkConversationUnread_Click"/>
+				<shell:ApplicationBarMenuItem Text="move to trash" Click="DeleteConversation_Click"/>
+			</shell:ApplicationBar.MenuItems>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+
+	<phone:PhoneApplicationPage.Resources>
+		<src:MessageListBox x:Key="MessageListBox" />
+		<src:MessageSenderConverter x:Key="MessageSenderConverter" />
+		<DataTemplate x:Key="MessageTemplate">
+			<Border VerticalAlignment="Center">
+				<!--<toolkit:ContextMenuService.ContextMenu>
+					<toolkit:ContextMenu IsZoomEnabled="False" Opened="ContextMenu_Opened" Loaded="ContextMenu_Loaded">
+					</toolkit:ContextMenu>
+				</toolkit:ContextMenuService.ContextMenu>-->
+				<StackPanel Margin="10,10,10,10" tilt:TiltEffect.IsTiltEnabled="True">
+					<Border BorderBrush="{Binding Converter={StaticResource MessageSenderConverter}}" BorderThickness="5,5,5,5" CornerRadius="8,8,8,8">
+						<StackPanel Name="Text" Background="{Binding Converter={StaticResource MessageSenderConverter}}" Margin="0,0,0,0">
+							<src:PartiallyUnderlinedTextBlock Text="{Binding Text}" Margin="12,0" UnderlinedWord="{Binding UnderlinedWord}" />
+							<TextBlock Text="{Binding Time}" Style="{StaticResource PhoneTextContrastStyle}"/>
+						</StackPanel>
+					</Border>
+					<Grid>
+						<Path Data="M 40 0 L 20 0 50 20 Z" Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Right" Margin="10,0,20,10" Visibility="{Binding Converter={StaticResource MessageSenderConverter}, ConverterParameter=True}"  />
+						<Path Data="M 40 0 L 20 0 10 20 Z" Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Margin="10,0,10,10" Visibility="{Binding Converter={StaticResource MessageSenderConverter}, ConverterParameter=False}"/>
+					</Grid>
+				</StackPanel>
+			</Border>
+		</DataTemplate>
+	</phone:PhoneApplicationPage.Resources>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<msads:AdControl Grid.Row="0" ApplicationId="f6dcda2f-2fe8-4807-8eaf-ea0cf0730e2a" AdUnitId="26328" AdModel="Contextual" x:Name="mAdControl" Visibility="Collapsed" />
+		<MediaElement x:Name="mMediaPlayer" />
+		<ProgressBar x:Name="mProgressBar" IsIndeterminate="True" VerticalAlignment="Top" Visibility="Collapsed"/>
+
+		<!--TitlePanel contains the name of the application and page title-->
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="128"/>
+			</Grid.ColumnDefinitions>
+			<Image Grid.Row="0" Grid.Column="1" Source="{Binding Converter={StaticResource MessageSenderConverter}}" Margin="0,0,10,0" />
+			<StackPanel Grid.Column="0" x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28" Background="Transparent">
+				<TextBlock x:Name="mContactNameText" Text="{Binding OtherParticipant}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48" />
+				<Button Margin="0" Padding="0" Click="Call_Click">
+					<Button.Template>
+						<ControlTemplate>
+							<StackPanel Orientation="Horizontal" x:Name="stackPanel" RenderTransformOrigin="0.5,0.5">
+								<StackPanel.RenderTransform>
+									<CompositeTransform/>
+								</StackPanel.RenderTransform>
+								<VisualStateManager.VisualStateGroups>
+									<VisualStateGroup x:Name="CommonStates">
+										<VisualState x:Name="Normal"/>
+										<VisualState x:Name="MouseOver"/>
+										<VisualState x:Name="Pressed">
+											<Storyboard>
+												<DoubleAnimation Duration="0" To="0.9" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="stackPanel" d:IsOptimized="True"/>
+												<DoubleAnimation Duration="0" To="0.9" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="stackPanel" d:IsOptimized="True"/>
+											</Storyboard>
+										</VisualState>
+										<VisualState x:Name="Disabled"/>
+									</VisualStateGroup>
+								</VisualStateManager.VisualStateGroups>
+								<Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+									<Rectangle.OpacityMask>
+										<ImageBrush ImageSource="/icons/appbar.phone.rest.png" />
+									</Rectangle.OpacityMask>
+								</Rectangle>
+								<TextBlock VerticalAlignment="Center" Text="{Binding DisplayNumber}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextAccentStyle}" FontSize="32" />
+							</StackPanel>
+						</ControlTemplate>
+					</Button.Template>
+				</Button>
+			</StackPanel>
+		</Grid>
+
+		<!--ContentPanel - place additional content here-->
+		<Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<src:MessageListBox Grid.Row="0" x:Name="mListBox" ItemTemplate="{StaticResource MessageTemplate}" ItemsSource="{Binding Messages}" VerticalAlignment="Bottom" ItemContainerStyle="{StaticResource NoSelectionListBoxItemStyle}">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</src:MessageListBox>
+			<TextBox x:Name="mMessageText" Grid.Row="1" AcceptsReturn="True" >
+				<TextBox.InputScope>
+					<InputScope>
+						<InputScopeName NameValue="Chat"/>
+					</InputScope>
+				</TextBox.InputScope>
+			</TextBox>
+		</Grid>
+	</Grid>
+
+</phone:PhoneApplicationPage>
